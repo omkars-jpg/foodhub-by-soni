@@ -1,0 +1,20 @@
+{% extends "base.html" %}{% block content %}
+<h2>🛒 Your Cart</h2>
+{% if not lines %}<p>Cart khali hai. <a href="/">Restaurants dekho</a></p>{% else %}
+<div class="card">
+{% for l in lines %}<div class="row"><span>{{ l.dish.name }} × {{ l.qty }}</span>
+ <span>₹{{ l.total }}
+ <form method="post" action="/cart/remove/{{ l.dish.id }}" style="display:inline"><button class="btn o">−</button></form>
+ <form method="post" action="/cart/add/{{ l.dish.id }}" style="display:inline"><button class="btn o">+</button></form></span></div>{% endfor %}
+<div class="row"><span>Subtotal</span><span>₹{{ subtotal }}</span></div>
+<div class="row"><span>Delivery fee</span><span>{{ '₹' ~ fee if fee else 'FREE' }}</span></div>
+<div class="row"><span>Tax (5%)</span><span>₹{{ tax }}</span></div>
+<div class="row"><b>Total</b><b>₹{{ total }}</b></div>
+</div>
+<form class="card" method="post" action="/checkout" style="margin-top:14px">
+ <h3>Delivery details</h3>
+ <input name="address" placeholder="Full address" required>
+ <input name="phone" placeholder="Phone number" required>
+ <p class="muted">Payment: Cash on Delivery</p>
+ <button class="btn">Place Order</button>
+</form>{% endif %}{% endblock %}

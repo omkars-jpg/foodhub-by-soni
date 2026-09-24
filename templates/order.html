@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block content %}
+<h2>Order #{{ order.id }} · {{ order.restaurant.name }}</h2>
+{% set cur = statuses.index(order.status) %}
+<div class="steps">{% for s in statuses %}<div class="step {{ 'done' if loop.index0 <= cur }}">{{ s }}</div>{% endfor %}</div>
+<div class="card">
+{% for i in order.items %}<div class="row"><span>{{ i.name }} × {{ i.qty }}</span><span>₹{{ i.price * i.qty }}</span></div>{% endfor %}
+<div class="row"><b>Total (incl. fee & tax)</b><b>₹{{ order.total }}</b></div>
+<p class="muted">📍 {{ order.address }} · 📞 {{ order.phone }}</p></div>{% endblock %}

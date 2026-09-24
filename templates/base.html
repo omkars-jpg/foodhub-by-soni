@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FoodHub by Soni</title>
+<style>
+:root{--c:#ff5a1f;--d:#1f2937;--g:#6b7280;--bg:#fff7f2}
+*{box-sizing:border-box}body{margin:0;font-family:system-ui,sans-serif;background:var(--bg);color:var(--d)}
+nav{background:#fff;padding:10px 20px;display:flex;align-items:center;gap:16px;box-shadow:0 1px 6px #0001;position:sticky;top:0;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--d);margin-right:auto}
+.logo b{font-size:22px}.logo b span{color:var(--c)}.logo small{display:block;font-size:11px;color:var(--g);margin-top:-2px}
+nav a{color:var(--d);text-decoration:none;font-weight:500}
+main{max-width:1000px;margin:20px auto;padding:0 16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px}
+.card{background:#fff;border-radius:14px;padding:16px;box-shadow:0 2px 8px #0001}
+a.card{text-decoration:none;color:inherit;display:block}
+.emoji{font-size:48px}.muted{color:var(--g);font-size:14px}
+.btn{background:var(--c);color:#fff;border:0;padding:8px 14px;border-radius:8px;cursor:pointer;font-weight:600;text-decoration:none;display:inline-block}
+.btn.o{background:#fff;color:var(--c);border:1px solid var(--c)}
+input,select{padding:9px;border:1px solid #ddd;border-radius:8px;width:100%;margin:4px 0 10px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #eee}
+.flash{background:#fff3cd;padding:10px;border-radius:8px;margin-bottom:12px}
+.veg{color:#16a34a}.nonveg{color:#dc2626}
+.steps{display:flex;gap:6px;margin:14px 0}.step{flex:1;padding:8px;text-align:center;background:#eee;border-radius:8px;font-size:13px}
+.step.done{background:var(--c);color:#fff}
+table{width:100%;border-collapse:collapse;background:#fff}td,th{padding:8px;border-bottom:1px solid #eee;text-align:left;font-size:14px}
+</style></head><body>
+<nav>
+ <a class="logo" href="/">
+  <svg width="38" height="38" viewBox="0 0 40 40"><rect width="40" height="40" rx="10" fill="#ff5a1f"/>
+  <path d="M8 26a12 12 0 0 1 24 0z" fill="#fff"/><rect x="5" y="28" width="30" height="3" rx="1.5" fill="#fff"/>
+  <circle cx="20" cy="12" r="2.2" fill="#fff"/></svg>
+  <div><b>Food<span>Hub</span></b><small>by Soni</small></div></a>
+ <a href="/cart">🛒 Cart ({{ cart_count }})</a>
+ {% if user %}<a href="/orders">My Orders</a>{% if user.is_admin %}<a href="/admin">Admin</a>{% endif %}
+ <a href="/logout">Logout ({{ user.name }})</a>
+ {% else %}<a href="/login">Login</a><a class="btn" href="/register">Sign up</a>{% endif %}
+</nav>
+<main>
+{% for m in get_flashed_messages() %}<div class="flash">{{ m }}</div>{% endfor %}
+{% block content %}{% endblock %}
+</main></body></html>

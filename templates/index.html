@@ -1,0 +1,15 @@
+{% extends "base.html" %}{% block content %}
+<h2>Kya khana hai aaj? 😋</h2>
+<form class="row" style="border:0" method="get">
+ <input name="q" placeholder="Restaurant search karo..." value="{{ q }}">
+ <select name="cuisine" style="max-width:200px"><option value="">All cuisines</option>
+ {% for c in cuisines %}<option {{ 'selected' if c == cuisine }}>{{ c }}</option>{% endfor %}</select>
+ <button class="btn">Search</button>
+</form>
+<div class="grid">
+{% for r in restaurants %}
+ <a class="card" href="/restaurant/{{ r.id }}"><div class="emoji">{{ r.emoji }}</div>
+ <h3 style="margin:6px 0">{{ r.name }}</h3><div class="muted">{{ r.cuisine }}</div>
+ <div class="muted">⭐ {{ r.rating }} · {{ r.eta }} min</div></a>
+{% else %}<p>Koi restaurant nahi mila.</p>{% endfor %}
+</div>{% endblock %}

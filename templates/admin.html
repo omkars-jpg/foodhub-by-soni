@@ -1,0 +1,18 @@
+{% extends "base.html" %}{% block content %}
+<h2>Admin Panel</h2>
+<div class="grid">
+<form class="card" method="post" action="/admin/restaurant"><h3>Add restaurant</h3>
+ <input name="name" placeholder="Name" required><input name="cuisine" placeholder="Cuisine" required>
+ <input name="emoji" placeholder="Emoji (🍕)"><button class="btn">Add</button></form>
+<form class="card" method="post" action="/admin/dish"><h3>Add dish</h3>
+ <select name="restaurant_id">{% for r in restaurants %}<option value="{{ r.id }}">{{ r.name }}</option>{% endfor %}</select>
+ <input name="name" placeholder="Dish name" required><input name="price" type="number" placeholder="Price" required>
+ <select name="veg"><option value="1">Veg</option><option value="0">Non-veg</option></select>
+ <input name="emoji" placeholder="Emoji"><button class="btn">Add</button></form>
+</div>
+<h3>Orders</h3>
+<div style="overflow-x:auto"><table><tr><th>#</th><th>Customer</th><th>Restaurant</th><th>Total</th><th>Status</th></tr>
+{% for o in orders %}<tr><td><a href="/order/{{ o.id }}">{{ o.id }}</a></td><td>{{ o.user.name }}</td><td>{{ o.restaurant.name }}</td><td>₹{{ o.total }}</td>
+<td><form method="post" action="/admin/order/{{ o.id }}" style="display:flex;gap:6px">
+<select name="status" style="margin:0">{% for s in statuses %}<option {{ 'selected' if s == o.status }}>{{ s }}</option>{% endfor %}</select>
+<button class="btn">Save</button></form></td></tr>{% endfor %}</table></div>{% endblock %}

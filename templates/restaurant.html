@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block content %}
+<h2>{{ r.emoji }} {{ r.name }}</h2>
+<p class="muted">{{ r.cuisine }} · ⭐ {{ r.rating }} · {{ r.eta }} min</p>
+<a class="btn o" href="?veg={{ 0 if only_veg else 1 }}">{{ 'Show all' if only_veg else '🟢 Veg only' }}</a>
+<div class="card" style="margin-top:14px">
+{% for d in dishes %}
+ <div class="row"><div><span class="{{ 'veg' if d.is_veg else 'nonveg' }}">●</span> {{ d.emoji }} <b>{{ d.name }}</b>
+ <div class="muted">₹{{ d.price }}</div></div>
+ <form method="post" action="/cart/add/{{ d.id }}"><button class="btn">Add</button></form></div>
+{% else %}<p>Menu khali hai.</p>{% endfor %}
+</div>{% endblock %}
